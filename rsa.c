@@ -18,7 +18,7 @@ size_t * sieve_of_eratosthenes(int limit, int *primes_sz){
 	/* TODO */		
 	bool* boolPrime; 
 	boolPrime = (bool*)malloc(sizeof(bool)*(limit+1));
-    memset(boolPrime, true, limit+1); 
+    memset(boolPrime, true, limit+1);  //Making a boolean array where every index is true
 
 	int counter = 0;
 	int finalCount = 0;
@@ -62,6 +62,7 @@ int gcd(int a, int b){
 	/* TODO */
 	int rem;
 
+	//Using Euclidean Algorithm
 	if(a==0){
 		return b;
 	}	
@@ -82,9 +83,10 @@ size_t choose_e(size_t fi_n){
 	size_t e;
 
 	/* TODO */
-	srand(time(0));
-	e = (rand() % (fi_n)) + 1;
-	while(gcd(e, fi_n) != 1){
+	srand(time(0)); //sets the starting point for producing a series of pseudo-random integers
+	e = (rand() % (fi_n)) + 1; //Taking a random number from 1 till fi_n
+	while((gcd(e, fi_n) != 1) || (e%fi_n==0)){
+		//Repeating the process until a right number of e is found
 		e = (rand() % (fi_n)) + 1;
 	}
 
@@ -142,14 +144,14 @@ void rsa_keygen(void){
 
 	size_t* pubKeyPointer;
 	size_t* privKeyPrivate;
-	size_t* helpPub;
-	size_t* helpPriv;
-	pubKeyPointer = (size_t*)malloc(2*sizeof(size_t));
+	size_t* helpPub; //Helping pointer to keep the head of the pointer pubKeyPointer
+	size_t* helpPriv; //Helping pointer to keep the head of the pointer privKeyPrivate
+	pubKeyPointer = (size_t*)malloc(2*sizeof(size_t)); //These pointers will have two positions for two numbers of size size_t
 	privKeyPrivate = (size_t*)malloc(2*sizeof(size_t));
 	helpPub = pubKeyPointer;
-	*helpPub = n;
-	helpPub++;
-	*helpPub = d;
+	*helpPub = n; //The first position of the pointer shows the address of n
+	helpPub++; //Incrementing the pointer to show the next position
+	*helpPub = d; //The second position of the pointer shows the address of d
 	FILE* pubKey;
 	pubKey = fopen("public.key", "w");
 	if(pubKey == NULL){
@@ -157,7 +159,7 @@ void rsa_keygen(void){
 		exit(1);             
 	}
 	
-	fwrite(pubKeyPointer, sizeof(size_t), 2, pubKey);
+	fwrite(pubKeyPointer, sizeof(size_t), 2, pubKey); //Writing the content of pubKeyPointer in a file pubKey that has 2 size_t contents
 	fclose(pubKey);
 
 	helpPriv = privKeyPrivate;
@@ -245,8 +247,7 @@ void rsa_encrypt(char *input_file, char *output_file, char *key_file){
  * arg1: path to output file
  * arg2: path to key file
  */
-void
-rsa_decrypt(char *input_file, char *output_file, char *key_file)
+void rsa_decrypt(char *input_file, char *output_file, char *key_file)
 {
 	/* TODO */
 	FILE* in;
