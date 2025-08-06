@@ -1,85 +1,98 @@
-------------------------
-Assignment 3
-Course: HPY 414
-Seferli Iliodora 2017030094
-------------------------
+# RSA (Rivest-Shamir-Adleman) Algorithm
 
-------------------------
-I. File List           
-------------------------
-main.c		 Main program where the RSA algorithm is tested
-rsa.c		 Implementation of all the function used for RSA algorithm
-rsa.h		 C function declarations for RSA
-utils.c	 Implementation of helping tools
-utils.h 	 C function declarations for helping functions
-Makefile	 Makefile of the program
-README.txt 	 This File
+This project was created for a course in my Electrical and Computer Engineering (ECE) studies at [TUC](https://www.tuc.gr/) (Technical University of Crete). It implements the RSA algorithm for encryption and decryption, relying on a pair of mathematically linked keys: a public key for encryption and a private key for decryption. 
 
-------------------------
-II. Requirements
-------------------------
-any Linux distribution
+---
 
+## 🎓 Project Info
 
-------------------------
-III. Compilation
-------------------------
-make [all]  - to build assign_3.
-make clean  - to remove the compiled files that were created
+- **Course**: Cyber Security
+- **Institution**: Technical University of Crete (TUC)
+- **Department**: School of Electrical and Computer Engineering
+- **Semester**: Fall 2020
+- **Project Type**: Individual assignment
+- **Language**: C
+- **Platform**: Linux
 
-------------------------
-IV. Execution
-------------------------
-For Task D:
-1. ./assign_3 -i hpy414_encryptme_pub.txt -o TUC2017030094_encrypted_pub.txt -k hpy414_public.key -e
-This command makes the program encrypt (-e) the hpy414_encryptme_pub.txt file with the password (-k) hpy414_public.key and write the ciphertext in a file named TUC2017030094_encrypted_pub.txt
+---
 
-2. ./assign_3 -i hpy414_decryptme_pub.txt -o TUC2017030094_decrypted_pub.txt -k hpy414_public.key -d
-This command makes the program decrypt (-d) the hpy414_decryptme_pub.txt file with the password (-k) hpy414_public.key and write the ciphertext in a file named TUC2017030094_decrypted_pub.txt
+## ✨ Features
 
-3. ./assign_3 -i hpy414_encryptme_priv.txt -o TUC2017030094_encrypted_priv.txt -k hpy414_private.key -e
-This command makes the program encrypt (-e) the hpy414_encryptme_priv.txt file with the password (-k) hpy414_private.key and write the ciphertext in a file named TUC2017030094_encrypted_priv.txt
+- **Keys generation**: Generates both random public and private keys by providing the argument *-e*
+- **File Encryption**: Encrypts an input file using either the public or private key provided by the specific argument in the command.
+- **File Decryprion**: Decrypts an input file using either the public or private key (according to which key was used for encryption) provided by the specific argument in the command.
 
-4. ./assign_3 -i hpy414_decryptme_priv.txt -o TUC2017030094_decrypted_priv.txt -k hpy414_private.key -d
-This command makes the program decrypt (-d) the hpy414_decryptme_priv.txt file with the password (-k) hpy414_private.key and write the ciphertext in a file named TUC2017030094_decrypted_priv.txt
+---
 
+## 🧱 File Structure
 
-For the key:
-./assign_3 -g
+| File Name           | Description                                              |
+|---------------------|----------------------------------------------------------|
+| **main.c**  |  Main program where the RSA algorithm is tested |
+| **rsa.c**  | Implementation of all the function used for RSA algorithm |
+| **rsa.h**           | C function declarations for RSA |
+| **utils.c**  |  Implementation of helping tools |
+| **utils.h**           | C function declarations for helping functions |
+| **Makefile**           | Makefile of the program |
 
-------------------------
-V. Design
-------------------------
-The implementation of RSA algorithm was made in rsa.c file, where I made the following functions:
+---
 
-A.size_t * sieve_of_eratosthenes(int limit, int *primes_sz)
-Using information found from https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes, I created this part of the code that will be used for the generation of a public and a private key. In this
-particular function, I create a boolean array where every value is true and then, with a for-loop, I search which index position is not corresponded in a prime number and I make the value false by 
-starting from the smallest prime (being 2) and counting in increments of this number. Then, I count the true values (meaning the prime numbers of the array) to indicate the prime_sz and allocate the 
-memory needed to make the array of primes. In the end, I create the final array.
+## 🛠 Build and Run
 
-B.int gcd(int a, int b)
-To create this function, I used https://en.wikipedia.org/wiki/Greatest_common_divisor link and used the Euclidean Algorithm to take the greatest common divisor.
+### Dependencies
 
-C.size_t choose_e(size_t fi_n)
-For this function, I followed the instruction of the assignment and https://en.wikipedia.org/wiki/RSA_(cryptosystem). In particular, I generate a new random number e that is between 1<e<fi_n, as wiki
-article suggests, every time it doesn't follow the instructions of the assignment, them being ​(e % fi(n) != 0) AND (gcd(e, fi(n)) == 1). 
+This project requires:
+- **GCC** for compilation
 
-D.size_t mod_inverse(size_t a, size_t b)
-To create this function, I used https://en.wikipedia.org/wiki/Modular_multiplicative_inverse link.
+Ensure that the necessary libraries are installed:
+```bash
+sudo apt-get install libssl-dev
+```
 
-E.void rsa_keygen(void)
-With all of the above functions, I was able to implement the rsa_keygen, according to the instructions of the assignment. I made a pool of prime numbers with sieve_of_eratosthenes(), I choose two random prime numbers (p, q), then I compute n where n = p*q, calculate fi(n) where fi(n) = (p-1)*(q-1), use choose_e() to generate a number e (where gcd() will be used), choose a number d where d is generated by mod_inverse() and then write n and d in a file named public.key and n and e in a file named private.key.
+### Build
 
-F.void rsa_encrypt(char *input_file, char *output_file, char *key_file)
-Firstly, I read the input_file to get the plaintext that needs to be encrypted. Then I read the key_file that has two numbers of size_t and put the content in a pointer where a split 
-the two numbers to take the n and d. As the assignment suggests, I allocate memory for the ciphertext according to the plaintext length that I have calculated. The ciphertext will have length of input_len * sizeof(size_t). For each character of the plaintext I calculate the cipher of this character according to https://en.wikipedia.org/wiki/RSA_(cryptosystem) in "Encryption" and I pass all the ciphertext via a size_t pointer in a file named as the output_file suggests. 
+To compile and build the project:
+1. Clone this repository to your local machine.
 
-G.void rsa_decrypt(char *input_file, char *output_file, char *key_file)
-For the decryption, the same process as encryption is followed with the only difference being the allocation of memory for the plaintext that will be produced by the ciphertext, as now I need to make the size_t bytes into char bytes, meaning I have to divide the input_len (ciphertext length) by size of size_t (8).
+2. Use the Makefile provided to build the project.
+   ```bash
+   make [all]
+   ```
 
+---
+
+## Usage
+
+Once the project is built, you can use it as follows:
+
+1. Generate the key files.
+
+    ```bash
+    ./assign_3 -g
+    ```
+
+2. Encrypt any file given (name provided as first argument) by the name of the file that the encryption will be saved in and the public key file.
+
+    ```bash
+    ./assign_3 -i [input_file_name].txt -o [output_file_name].txt -k public.key -e
+    ```
 
 
+3. Decrypt any file given by name followed by the name of the file that the output will be saved in and private key file.
+
+    ```bash
+    ./assign_3 -i [input_file_name].txt -o [output_file_name].txt -k public.key -d
+    ```
+ 
+4. Clean up the generated files
+
+    You can clean up all compiled files by running:
+
+    ```bash
+    make clean
+    ```
+
+---
 
 
 

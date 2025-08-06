@@ -78,15 +78,12 @@ int main(int argc, char **argv){
 		break;
 	default:
 		break;
-	}
-
-		
+	}		
 
 	/* Clean up */
 	free(input_file);
 	free(output_file);
 	free(key_file);
-
 
 	/* END */
 	return 0;

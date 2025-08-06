@@ -3,63 +3,45 @@
 #include <stdbool.h>
 #include<time.h> 
 
-/*
- * Sieve of Eratosthenes Algorithm
- * https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
- *
- * arg0: A limit
- * arg1: The size of the generated primes list. Empty argument used as ret val
- *
- * ret:  The prime numbers that are less or equal to the limit
- */
-size_t * sieve_of_eratosthenes(int limit, int *primes_sz){
+size_t * sieve_of_eratosthenes(int limit, int *primes_sz) {
 	size_t *primes;
 
-	/* TODO */		
+	//Making a boolean array where every index is true
 	bool* boolPrime; 
 	boolPrime = (bool*)malloc(sizeof(bool)*(limit+1));
-    memset(boolPrime, true, limit+1);  //Making a boolean array where every index is true
+    memset(boolPrime, true, limit+1);  
 
 	int counter = 0;
 	int finalCount = 0;
 	for(int p=2; p*p<=limit; p++){
-		if(boolPrime[p]==true){ //Means that we have a prime number and we need to mark its multipliers
+		//Means that we have a prime number and we need to mark its multipliers
+		if(boolPrime[p]==true){ 
 			for(int i=p*p; i<=limit; i+=p){
 				boolPrime[i] = false;
 			}
 		}
 	}
 
+	//For every prime, the counter increases
 	for(int i=2; i<limit; i++){
 		if(boolPrime[i]==true){
-			counter++; //For every prime the counter increases
+			counter++; 
 		}
 	}
 
 	*primes_sz = counter;	
 	primes = (size_t*)malloc(sizeof(size_t)*counter);
-
 	for(int i=2; i<limit; i++){
 		if(boolPrime[i]==true){
 			primes[finalCount] = i;
 			finalCount++;
 		}
 	}
-
 	return primes;
 }
 
 
-/*
- * Greatest Common Denominator
- *
- * arg0: first number
- * arg1: second number
- *
- * ret: the GCD
- */
-int gcd(int a, int b){
-	/* TODO */
+int gcd(int a, int b) {
 	int rem;
 
 	//Using Euclidean Algorithm
@@ -71,39 +53,21 @@ int gcd(int a, int b){
 }
 
 
-/*
- * Chooses 'e' where 
- *     1 < e < fi(n) AND gcd(e, fi(n)) == 1
- *
- * arg0: fi(n)
- *
- * ret: 'e'
- */
-size_t choose_e(size_t fi_n){
+size_t choose_e(size_t fi_n) {
 	size_t e;
-
-	/* TODO */
-	srand(time(0)); //sets the starting point for producing a series of pseudo-random integers
-	e = (rand() % (fi_n)) + 1; //Taking a random number from 1 till fi_n
+	//Sets the starting point for producing a series of pseudo-random integers
+	srand(time(0)); 
+	//Taking a random number from 1 till fi_n
+	e = (rand() % (fi_n)) + 1;
 	while((gcd(e, fi_n) != 1) || (e%fi_n==0)){
 		//Repeating the process until a right number of e is found
 		e = (rand() % (fi_n)) + 1;
 	}
-
 	return e;
 }
 
 
-/*
- * Calculates the modular inverse
- *
- * arg0: first number
- * arg1: second number
- *
- * ret: modular inverse
- */
-size_t mod_inverse(size_t a, size_t b){
-	/* TODO */
+size_t mod_inverse(size_t a, size_t b) {
     a = a%b; 
     for (int x=1; x<b; x++){ 
        if ((a*x) % b == 1){ 
@@ -113,11 +77,7 @@ size_t mod_inverse(size_t a, size_t b){
 }
 
 
-/*
- * Generates an RSA key pair and saves
- * each key in a different file
- */
-void rsa_keygen(void){
+void rsa_keygen(void) {
 	size_t p;
 	size_t q;
 	size_t n;
@@ -126,14 +86,13 @@ void rsa_keygen(void){
 	size_t d;
 
 	int primesSize, randomIndex;
-	/* TODO */
+
 	size_t* primeList;
 	primeList = sieve_of_eratosthenes(RSA_SIEVE_LIMIT, &primesSize);
 	
 	srand(time(0));
 	randomIndex = rand() % primesSize;
 	p = primeList[randomIndex];
-
 	randomIndex = rand() % primesSize;
 	q = primeList[randomIndex];
 
@@ -178,15 +137,7 @@ void rsa_keygen(void){
 }
 
 
-/*
- * Encrypts an input file and dumps the ciphertext into an output file
- *
- * arg0: path to input file
- * arg1: path to output file
- * arg2: path to key file
- */
-void rsa_encrypt(char *input_file, char *output_file, char *key_file){
-	/* TODO */
+void rsa_encrypt(char *input_file, char *output_file, char *key_file) {
 	FILE* in;
 	FILE* out;
 	FILE* keyF;
@@ -240,16 +191,7 @@ void rsa_encrypt(char *input_file, char *output_file, char *key_file){
 }
 
 
-/*
- * Decrypts an input file and dumps the plaintext into an output file
- *
- * arg0: path to input file
- * arg1: path to output file
- * arg2: path to key file
- */
-void rsa_decrypt(char *input_file, char *output_file, char *key_file)
-{
-	/* TODO */
+void rsa_decrypt(char *input_file, char *output_file, char *key_file) {
 	FILE* in;
 	FILE* out;
 	FILE* keyF;

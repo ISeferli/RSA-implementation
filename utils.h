@@ -11,8 +11,7 @@
  * arg0: data
  * arg1: data len
  */
-void
-print_hex(unsigned char *, size_t);
+void print_hex(unsigned char *, size_t);
 
 
 /*
@@ -21,15 +20,13 @@ print_hex(unsigned char *, size_t);
  * arg0: data
  * arg1: data len
  */
-void
-print_string(unsigned char *, size_t);
+void print_string(unsigned char *, size_t);
 
 
 /*
  * Prints the usage message
  */
-void
-usage(void);
+void usage(void);
 
 
 /*
@@ -40,8 +37,7 @@ usage(void);
  * arg2: path to key file
  * arg3: operation mode
  */
-void
-check_args(char *, char *, char *, int);
+void check_args(char *, char *, char *, int);
 
 
 #endif /* _UTILS_H */

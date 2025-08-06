@@ -1,11 +1,5 @@
 #include "utils.h"
 
-/*
- * Prints the hex value of the input
- *
- * arg0: data
- * arg1: data len
- */
 void print_hex(unsigned char *data, size_t len){
 	size_t i;
 
@@ -22,15 +16,7 @@ void print_hex(unsigned char *data, size_t len){
 }
 
 
-/*
- * Prints the input as string
- *
- * arg0: data
- * arg1: data len
- */
-void
-print_string(unsigned char *data, size_t len)
-{
+void print_string(unsigned char *data, size_t len) {
 	size_t i;
 
 	if (!data)
@@ -42,13 +28,7 @@ print_string(unsigned char *data, size_t len)
 	}
 }
 
-
-/*
- * Prints the usage message
- */
-void
-usage(void)
-{
+void usage(void) {
 	printf(
 	    "\n"
 	    "Usage:\n"
@@ -71,17 +51,7 @@ usage(void)
 }
 
 
-/*
- * Checks the validity of the arguments
- *
- * arg0: path to input file
- * arg1: path to output file
- * arg2: path to key file
- * arg3: operation mode
- */
-void
-check_args(char *input_file, char *output_file, char *key_file, int op_mode)
-{
+void check_args(char *input_file, char *output_file, char *key_file, int op_mode) {
 	if ((!input_file) && (op_mode != 2)) {
 		printf("Error: No input file!\n");
 		usage();
