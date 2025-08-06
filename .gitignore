@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+hpy414_decryptme_priv.txt
+hpy414_decryptme_pub.txt
+hpy414_encryptme_priv.txt
+hpy414_encryptme_pub.txt
+hpy414_private.key
+hpy414_public.key
